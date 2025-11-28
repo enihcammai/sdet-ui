@@ -1,5 +1,6 @@
 package com.simbirsoft.ui.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -10,6 +11,7 @@ import java.time.Duration;
 public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -36,7 +38,7 @@ public class BasePage {
     }
 
     protected void scrollToElement(WebElement element) {
-        ((org.openqa.selenium.JavascriptExecutor) driver)
+        ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView(true);", element);
     }
 }

@@ -1,5 +1,6 @@
 package com.simbirsoft.ui.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,9 +20,14 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//*[@id=\"page\"]/div[2]/div/section/div[2]")
     private WebElement footerContainer;
 
+    @FindBy(className = "site-logo-img")
+    private WebElement siteLogo;
+
+
     public void scrollToFooter() {
         scrollToElement(footerContainer);
     }
+
 
     public void clickScrollTopButton(){
         click(scrollTopBtn);
@@ -32,7 +38,15 @@ public class HomePage extends BasePage {
                 isElementVisible(memberLoginBtn);
     }
 
-    public boolean isFooterVisible() {
-        return isElementVisible(footerContainer);
+    public void clickMemberLogin() {
+        click(memberLoginBtn);
+    }
+
+    public boolean isMemberLoginButtonVisible() {
+        return isElementVisible(memberLoginBtn);
+    }
+
+    public boolean isLogoVisible() {
+        return isElementVisible(siteLogo);
     }
 }
