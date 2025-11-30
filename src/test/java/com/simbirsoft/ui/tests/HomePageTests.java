@@ -11,7 +11,7 @@ public class HomePageTests extends BaseTest {
     @Test(priority = 1, description = "UI-01: Успешная проверка загрузки и работы главной страницы")
     public void testHomePageLoading() {
         HomePage homePage = new HomePage(driver);
-        homePage.scrollToFooter();
+        homePage.isFooterVisible();
         String currentUrl = driver.getCurrentUrl();
 
         assertTrue(homePage.isHomePageLoaded() && currentUrl.contains("way2automation.com"),
@@ -21,17 +21,9 @@ public class HomePageTests extends BaseTest {
     @Test(priority = 2, description = "UI-02: Успешная проверка работы кнопки возврата в начало страницы")
     public void testScrollToTopButton() {
         HomePage homePage = new HomePage(driver);
-        if(homePage.isHomePageLoaded()) {
-            homePage.scrollToFooter();
-            homePage.clickScrollTopButton();
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+        if(homePage.isHomePageLoaded() && homePage.isFooterVisible()) {
+            homePage.clickScrollToTopButton();
         }
-
         assertTrue(homePage.isLogoVisible(),"Страница не вернулась в начало после нажатия кнопки");
     }
 

@@ -3,7 +3,6 @@ package com.simbirsoft.ui.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BasePage {
 
@@ -24,15 +23,21 @@ public class HomePage extends BasePage {
     private WebElement siteLogo;
 
 
-    public void scrollToFooter() {
+    public boolean isFooterVisible() {
         scrollToElement(footerContainer);
+        return isElementVisible(footerContainer);
     }
 
 
-    public void clickScrollTopButton(){
-        actions.doubleClick().build().perform();
+    public void clickScrollToTopButton(){
+        actions.moveByOffset(200,100).build().perform();
         if (isScrollToTopButtonVisible()) {
             click(scrollTopBtn);
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ignore){
+
+            }
         }
     }
 

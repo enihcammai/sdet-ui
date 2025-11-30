@@ -25,10 +25,6 @@ public class LoginPage extends BasePage {
         return isElementVisible(loginForm);
     }
 
-    public boolean isSignUpLinkVisible() {
-        return isElementVisible(signUpLink);
-    }
-
     public RegistrationPage clickSignUpAndGoToRegistration() {
         clickSignUp();
         return new RegistrationPage(driver);
