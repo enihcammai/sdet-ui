@@ -23,7 +23,6 @@ public class HomePageTests extends BaseTest {
         HomePage homePage = new HomePage(driver);
         if(homePage.isHomePageLoaded()) {
             homePage.scrollToFooter();
-
             homePage.clickScrollTopButton();
 
             try {

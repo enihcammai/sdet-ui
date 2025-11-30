@@ -1,4 +1,4 @@
-package com.simbirsoft.ui;
+package com.simbirsoft.ui.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

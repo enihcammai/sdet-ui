@@ -28,6 +28,13 @@ public class RegistrationPage extends BasePage {
     @FindBy(id = "otp-signup")
     private WebElement registrationForm;
 
+    @FindBy(css = "[data-testid='name-input-error']")
+    private WebElement nameErrorMessage;
+
+    @FindBy(css = "data-testid='email-input-error']")
+    private WebElement emailErrorMessage;
+
+
     public void fillFullName(String fullName) {
         type(fullNameField, fullName);
     }
@@ -71,13 +78,88 @@ public class RegistrationPage extends BasePage {
         return isElementVisible(registrationForm);
     }
 
-    public boolean areFormFieldsVisible() {
-        return isElementVisible(fullNameField) &&
-                isElementVisible(emailField) &&
-                isElementVisible(agreeCheckbox);
-    }
-
     public boolean isSendCodeButtonEnabled() {
         return sendCodeButton.isEnabled();
+    }
+
+    public boolean isNameErrorMessageVisible() {
+        return isElementVisible(nameErrorMessage);
+    }
+
+    public boolean isEmailErrorMessageVisible() {
+        return isElementVisible(emailErrorMessage);
+    }
+
+    public String getErrorMessageText() {
+        if (isEmailErrorMessageVisible()) {
+            return "Email Field Error: " + emailErrorMessage.getText();
+        }else if(isNameErrorMessageVisible()){
+            return "Name Field Error: " + nameErrorMessage.getText();
+        }else if(isEmailErrorMessageVisible() && isEmailErrorMessageVisible()){
+            return "Name Field Error: " + nameErrorMessage.getText() + " and Email Field Error: " + emailErrorMessage.getText();
+        }
+        return "No errors";
+    }
+
+    public boolean canSubmitForm() {
+        return isSendCodeButtonEnabled() && !isNameErrorMessageVisible() && !isEmailErrorMessageVisible();
+    }
+
+    public void clearForm() {
+        fullNameField.clear();
+        emailField.clear();
+        setAgreeCheckbox(false);
+    }
+
+    public void fillFormWithValidation(String fullName, String email) {
+        clearForm();
+        fillFullName(fullName);
+        fillEmail(email);
+        setAgreeCheckbox(true);
+    }
+
+    public TestResult testFormWithData(String fullName, String email) {
+        fillFormWithValidation(fullName, email);
+
+        boolean canSubmit = canSubmitForm();
+        String error = getErrorMessageText();
+
+        return new TestResult(fullName, email, canSubmit, error);
+    }
+
+    public static class TestResult {
+        private final String fullName;
+        private final String email;
+        private final boolean accepted;
+        private final String errorMessage;
+
+        public TestResult(String fullName, String email, boolean accepted, String errorMessage) {
+            this.fullName = fullName;
+            this.email = email;
+            this.accepted = accepted;
+            this.errorMessage = errorMessage;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public boolean isAccepted() {
+            return accepted;
+        }
+
+        public String getErrorMessage() {
+            return errorMessage;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Имя: %s, Email: %s, Данные приняты: %s, Ошибка: %s",
+                    fullName, email, accepted, errorMessage);
+        }
     }
 }

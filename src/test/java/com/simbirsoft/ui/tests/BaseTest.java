@@ -1,6 +1,6 @@
 package com.simbirsoft.ui.tests;
 
-import com.simbirsoft.ui.PropertyService;
+import com.simbirsoft.ui.utils.PropertyService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
