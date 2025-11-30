@@ -1,0 +1,8 @@
+#IDEA
+/target
+/.idea
+/main
+
+#Allure
+.allure
+/*/allure-results/
