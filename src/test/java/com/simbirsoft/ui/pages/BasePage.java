@@ -35,7 +35,7 @@ public class BasePage {
         }
     }
 
-    protected void type(WebElement element, String text) {
+    protected void sendKeys(WebElement element, String text) {
         wait.until(ExpectedConditions.visibilityOf(element));
         element.clear();
         element.sendKeys(text);

@@ -33,11 +33,6 @@ public class HomePage extends BasePage {
         actions.moveByOffset(200,100).build().perform();
         if (isScrollToTopButtonVisible()) {
             click(scrollTopBtn);
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException ignore){
-
-            }
         }
     }
 

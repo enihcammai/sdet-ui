@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegistrationPage extends BasePage {
 
     public RegistrationPage(WebDriver driver) {
@@ -36,11 +39,11 @@ public class RegistrationPage extends BasePage {
 
 
     public void fillFullName(String fullName) {
-        type(fullNameField, fullName);
+        sendKeys(fullNameField, fullName);
     }
 
     public void fillEmail(String email) {
-        type(emailField, email);
+        sendKeys(emailField, email);
     }
 
     public void fillRegistrationForm(String fullName, String email) {
@@ -48,16 +51,8 @@ public class RegistrationPage extends BasePage {
         fillEmail(email);
     }
 
-    public void setAgreeCheckbox(boolean agree) {
-        if (agree) {
-            if (!agreeCheckbox.isSelected()) {
-                click(agreeCheckbox);
-            }
-        } else {
-            if (agreeCheckbox.isSelected()) {
-                click(agreeCheckbox);
-            }
-        }
+    public void setAgreeCheckbox() {
+        click(agreeCheckbox);
     }
 
     public void clickSendCode() {
@@ -65,13 +60,7 @@ public class RegistrationPage extends BasePage {
     }
 
     public boolean isVerificationFormVisible() {
-        try {
-            Thread.sleep(1500); // Wait for form transition
-            return isElementVisible(verificationForm);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return false;
-        }
+        return isElementVisible(verificationForm);
     }
 
     public boolean isRegistrationFormVisible() {
@@ -91,37 +80,33 @@ public class RegistrationPage extends BasePage {
     }
 
     public String getErrorMessageText() {
-        if (isEmailErrorMessageVisible()) {
-            return "Email Field Error: " + emailErrorMessage.getText();
-        }else if(isNameErrorMessageVisible()){
-            return "Name Field Error: " + nameErrorMessage.getText();
-        }else if(isEmailErrorMessageVisible() && isEmailErrorMessageVisible()){
-            return "Name Field Error: " + nameErrorMessage.getText() + " and Email Field Error: " + emailErrorMessage.getText();
+        List<String> errors = new ArrayList<>();
+
+        if (isNameErrorMessageVisible()) {
+            errors.add(nameErrorMessage.getText());
         }
-        return "No errors";
+        if (isEmailErrorMessageVisible()) {
+            errors.add(emailErrorMessage.getText());
+        }
+
+        return errors.isEmpty() ? "" : String.join("; ", errors);
     }
 
     public boolean canSubmitForm() {
         return isSendCodeButtonEnabled() && !isNameErrorMessageVisible() && !isEmailErrorMessageVisible();
     }
 
-    public void clearForm() {
-        fullNameField.clear();
-        emailField.clear();
-        setAgreeCheckbox(false);
-    }
-
     public void fillFormWithValidation(String fullName, String email) {
-        clearForm();
         fillFullName(fullName);
         fillEmail(email);
-        setAgreeCheckbox(true);
+        setAgreeCheckbox();
     }
 
     public TestResult testFormWithData(String fullName, String email) {
         fillFormWithValidation(fullName, email);
 
         boolean canSubmit = canSubmitForm();
+        clickSendCode();
         String error = getErrorMessageText();
 
         return new TestResult(fullName, email, canSubmit, error);
@@ -138,18 +123,6 @@ public class RegistrationPage extends BasePage {
             this.email = email;
             this.accepted = accepted;
             this.errorMessage = errorMessage;
-        }
-
-        public String getFullName() {
-            return fullName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public boolean isAccepted() {
-            return accepted;
         }
 
         public String getErrorMessage() {
