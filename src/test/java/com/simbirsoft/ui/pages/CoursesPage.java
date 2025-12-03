@@ -22,34 +22,27 @@ public class CoursesPage extends BasePage {
     @FindBy(partialLinkText = "Free lifetime access to 20+")
     private WebElement freeAccessToCoursesLink;
 
-    public void clickDevOpsSubMenuOption() {
-        clickSubMenuOption(allCoursesLink, devOpsLink);
+    public CoursesPage clickDevOpsSubMenuOption() {
+       return (CoursesPage) clickSubMenuOption(allCoursesLink, devOpsLink);
     }
 
     public boolean isDevOpsPageLoaded() {
         return driver.getCurrentUrl().toLowerCase().contains("devops");
     }
 
-    public void clickFreeAccessToCoursesLink() {
-        scrollToElement(freeAccessToCoursesLink);
-        click(freeAccessToCoursesLink);
+    public CoursesPage clickFreeAccessToCoursesLink() {
+        return (CoursesPage) scrollToElement(freeAccessToCoursesLink)
+                .click(freeAccessToCoursesLink);
     }
 
     public void switchToNewTab() {
         String originalWindow = driver.getWindowHandle();
-
-
         for (String windowHandle : driver.getWindowHandles()) {
             if (!originalWindow.equals(windowHandle)) {
                 driver.switchTo().window(windowHandle);
                 break;
             }
         }
-    }
-
-    public boolean isSeleniumTutorialUrl() {
-        String currentUrl = driver.getCurrentUrl();
-        return currentUrl.contains("selenium-tutorial.com");
     }
 
 }

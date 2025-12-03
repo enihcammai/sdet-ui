@@ -10,22 +10,22 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(linkText = "Sign Up")
+    @FindBy(className = "uni-ml-4 troubleShootBtn")
     private WebElement signUpLink;
 
     @FindBy(className = "m-auto-xs")
     private WebElement loginForm;
 
 
-    public void clickSignUp() {
-        click(signUpLink);
+    public LoginPage clickSignUp() {
+        return (LoginPage) click(signUpLink);
     }
 
     public boolean isLoginFormVisible() {
         return isElementVisible(loginForm);
     }
 
-    public RegistrationPage clickSignUpAndGoToRegistration() {
+    public RegistrationPage navigateToRegistration() {
         clickSignUp();
         return new RegistrationPage(driver);
     }

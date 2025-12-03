@@ -38,25 +38,30 @@ public class RegistrationPage extends BasePage {
     private WebElement emailErrorMessage;
 
 
-    public void fillFullName(String fullName) {
-        sendKeys(fullNameField, fullName);
+    public RegistrationPage fillFullName(String fullName) {
+        return (RegistrationPage) sendKeys(fullNameField, fullName);
     }
 
-    public void fillEmail(String email) {
-        sendKeys(emailField, email);
+    public RegistrationPage openRegistrationForm(){
+        driver.get("https://sso.teachable.com/secure/673/identity/sign_up/otp");
+        return this;
     }
 
-    public void fillRegistrationForm(String fullName, String email) {
-        fillFullName(fullName);
-        fillEmail(email);
+    public RegistrationPage fillEmail(String email) {
+       return (RegistrationPage) sendKeys(emailField, email);
     }
 
-    public void setAgreeCheckbox() {
-        click(agreeCheckbox);
+    public RegistrationPage fillRegistrationForm(String fullName, String email) {
+        return fillFullName(fullName)
+                .fillEmail(email);
     }
 
-    public void clickSendCode() {
-        click(sendCodeButton);
+    public RegistrationPage setAgreeCheckbox() {
+        return (RegistrationPage) click(agreeCheckbox);
+    }
+
+    public RegistrationPage clickSendCode() {
+        return (RegistrationPage) click(sendCodeButton);
     }
 
     public boolean isVerificationFormVisible() {
@@ -65,10 +70,6 @@ public class RegistrationPage extends BasePage {
 
     public boolean isRegistrationFormVisible() {
         return isElementVisible(registrationForm);
-    }
-
-    public boolean isSendCodeButtonEnabled() {
-        return sendCodeButton.isEnabled();
     }
 
     public boolean isNameErrorMessageVisible() {
@@ -89,50 +90,13 @@ public class RegistrationPage extends BasePage {
             errors.add(emailErrorMessage.getText());
         }
 
-        return errors.isEmpty() ? "" : String.join("; ", errors);
+        return errors.isEmpty() ? null : String.join("; ", errors);
     }
 
-    public boolean canSubmitForm() {
-        return isSendCodeButtonEnabled() && !isNameErrorMessageVisible() && !isEmailErrorMessageVisible();
+    public RegistrationPage testFormWithData(String fullName, String email) {
+        return fillRegistrationForm(fullName, email)
+                .setAgreeCheckbox()
+                .clickSendCode();
     }
 
-    public void fillFormWithValidation(String fullName, String email) {
-        fillFullName(fullName);
-        fillEmail(email);
-        setAgreeCheckbox();
-    }
-
-    public TestResult testFormWithData(String fullName, String email) {
-        fillFormWithValidation(fullName, email);
-
-        boolean canSubmit = canSubmitForm();
-        clickSendCode();
-        String error = getErrorMessageText();
-
-        return new TestResult(fullName, email, canSubmit, error);
-    }
-
-    public static class TestResult {
-        private final String fullName;
-        private final String email;
-        private final boolean accepted;
-        private final String errorMessage;
-
-        public TestResult(String fullName, String email, boolean accepted, String errorMessage) {
-            this.fullName = fullName;
-            this.email = email;
-            this.accepted = accepted;
-            this.errorMessage = errorMessage;
-        }
-
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("Имя: %s, Email: %s, Данные приняты: %s, Ошибка: %s",
-                    fullName, email, accepted, errorMessage);
-        }
-    }
 }

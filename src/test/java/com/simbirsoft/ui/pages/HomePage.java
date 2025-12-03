@@ -22,18 +22,28 @@ public class HomePage extends BasePage {
     @FindBy(className = "site-logo-img")
     private WebElement siteLogo;
 
+    @FindBy(id = "menu-item-27580")
+    private WebElement allCoursesLink;
+
 
     public boolean isFooterVisible() {
-        scrollToElement(footerContainer);
         return isElementVisible(footerContainer);
     }
 
+    public HomePage scrollToFooter(){
+        return (HomePage) scrollToElement(footerContainer);
+    }
 
-    public void clickScrollToTopButton(){
+    public HomePage clickAllCourses() {
+        return (HomePage) click(allCoursesLink);
+    }
+
+    public HomePage clickScrollToTopButton(){
         actions.moveByOffset(200,100).build().perform();
         if (isScrollToTopButtonVisible()) {
-            click(scrollTopBtn);
+             return (HomePage) click(scrollTopBtn);
         }
+        return this;
     }
 
     public boolean isScrollToTopButtonVisible(){
@@ -45,15 +55,22 @@ public class HomePage extends BasePage {
                 isElementVisible(memberLoginLink);
     }
 
-    public void clickMemberLogin() {
-        click(memberLoginLink);
+    public HomePage clickMemberLogin() {
+        return (HomePage) click(memberLoginLink);
     }
 
-    public boolean isMemberLoginButtonVisible() {
-        return isElementVisible(memberLoginLink);
-    }
 
     public boolean isLogoVisible() {
         return isElementVisible(siteLogo);
+    }
+
+    public LoginPage navigateToLogin() {
+        clickMemberLogin();
+        return new LoginPage(driver);
+    }
+
+    public CoursesPage navigateToCourses() {
+        clickAllCourses();
+        return new CoursesPage(driver);
     }
 }

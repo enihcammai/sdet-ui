@@ -22,23 +22,28 @@ public class BasePage {
         this.actions = new Actions(driver);
     }
 
-    protected void click(WebElement element) {
+    protected BasePage click(WebElement element) {
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        return this;
     }
 
-    protected void clickSubMenuOption(WebElement mainMenuOption, WebElement subMenuOption ) {
+    protected BasePage clickSubMenuOption(WebElement mainMenuOption, WebElement subMenuOption ) {
         if(isElementVisible(mainMenuOption)) {
             actions.moveToElement(mainMenuOption).build().perform();
             if (isElementVisible(subMenuOption)) {
                 click(subMenuOption);
             }
         }
+
+        return this;
     }
 
-    protected void sendKeys(WebElement element, String text) {
+    protected BasePage sendKeys(WebElement element, String text) {
         wait.until(ExpectedConditions.visibilityOf(element));
         element.clear();
         element.sendKeys(text);
+
+        return this;
     }
 
     protected boolean isElementVisible(WebElement element) {
@@ -49,8 +54,10 @@ public class BasePage {
         }
     }
 
-    protected void scrollToElement(WebElement element) {
+    protected BasePage scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView(true);", element);
+        return this;
     }
+
 }
