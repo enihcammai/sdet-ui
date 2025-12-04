@@ -6,3 +6,5 @@
 #Allure
 .allure
 /*/allure-results/
+
+/src/test/resources/msedgedriver.exe
