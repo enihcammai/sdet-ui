@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
 
+    private static final String LOGIN_PAGE_URL = "https://sso.teachable.com/secure/673/identity/login/otp";
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }
@@ -19,10 +21,6 @@ public class LoginPage extends BasePage {
 
     public LoginPage clickSignUp() {
         return (LoginPage) click(signUpLink);
-    }
-
-    public boolean isLoginFormVisible() {
-        return isElementVisible(loginForm);
     }
 
     public RegistrationPage navigateToRegistration() {

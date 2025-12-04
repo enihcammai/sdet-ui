@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrationPage extends BasePage {
+    private static final String REG_PAGE_URL = "https://sso.teachable.com/secure/673/identity/sign_up/otp";
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -43,7 +44,7 @@ public class RegistrationPage extends BasePage {
     }
 
     public RegistrationPage openRegistrationForm(){
-        driver.get("https://sso.teachable.com/secure/673/identity/sign_up/otp");
+        driver.get(REG_PAGE_URL);
         return this;
     }
 

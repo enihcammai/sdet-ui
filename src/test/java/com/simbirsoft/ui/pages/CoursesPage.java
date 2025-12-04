@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class CoursesPage extends BasePage {
 
+    private static final String COURSES_DEVOPS_URL = "https://www.way2automation.com/devops-training/";
+
     public CoursesPage(WebDriver driver) {
         super(driver);
     }

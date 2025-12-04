@@ -1,10 +1,13 @@
 package com.simbirsoft.ui.pages;
 
+import com.simbirsoft.ui.utils.PropertyService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage {
+
+    private static final String HOME_PAGE_URL = PropertyService.getInstance().getProperty("base_url");
 
     public HomePage(WebDriver driver) {
         super(driver);
