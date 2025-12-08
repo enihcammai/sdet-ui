@@ -1,6 +1,7 @@
 package com.simbirsoft.ui.pages;
 
 import com.simbirsoft.ui.utils.PropertyService;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,49 +30,59 @@ public class HomePage extends BasePage {
     private WebElement allCoursesLink;
 
 
+    @Step("Видимость футера")
     public boolean isFooterVisible() {
         return isElementVisible(footerContainer);
     }
 
-    public HomePage scrollToFooter(){
+    @Step("Скролл до футера")
+    public HomePage scrollToFooter() {
         return (HomePage) scrollToElement(footerContainer);
     }
 
+    @Step("Переход на страницу All courses")
     public HomePage clickAllCourses() {
         return (HomePage) click(allCoursesLink);
     }
 
-    public HomePage clickScrollToTopButton(){
-        actions.moveByOffset(200,100).build().perform();
+    @Step("Нажатие кнопки перемещения к началу страницы")
+    public HomePage clickScrollToTopButton() {
+        actions.moveByOffset(200, 100).build().perform();
         if (isScrollToTopButtonVisible()) {
-             return (HomePage) click(scrollTopBtn);
+            return (HomePage) click(scrollTopBtn);
         }
         return this;
     }
 
-    public boolean isScrollToTopButtonVisible(){
+    @Step("Видимость кнопки перемещения к началу страницы")
+    public boolean isScrollToTopButtonVisible() {
         return isElementVisible(scrollTopBtn);
     }
 
+    @Step("Статус загрузки страницы")
     public boolean isHomePageLoaded() {
         return driver.getTitle().contains("Way2Automation") &&
                 isElementVisible(memberLoginLink);
     }
 
+    @Step("Нажатие кнопки перехода к авторизации")
     public HomePage clickMemberLogin() {
         return (HomePage) click(memberLoginLink);
     }
 
 
+    @Step("Видимость лого")
     public boolean isLogoVisible() {
         return isElementVisible(siteLogo);
     }
 
+    @Step("Нажатие на кнопку перехода на страницу авторизации")
     public LoginPage navigateToLogin() {
         clickMemberLogin();
         return new LoginPage(driver);
     }
 
+    @Step("Нажатие на кнопку перехода на страницу All courses")
     public CoursesPage navigateToCourses() {
         clickAllCourses();
         return new CoursesPage(driver);

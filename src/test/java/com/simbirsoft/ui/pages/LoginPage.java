@@ -1,5 +1,6 @@
 package com.simbirsoft.ui.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,10 +20,12 @@ public class LoginPage extends BasePage {
     private WebElement loginForm;
 
 
+    @Step("Нажатие кнопки перехода к форме регистрации")
     public LoginPage clickSignUp() {
         return (LoginPage) click(signUpLink);
     }
 
+    @Step("Переход к форме регистрации")
     public RegistrationPage navigateToRegistration() {
         clickSignUp();
         return new RegistrationPage(driver);
