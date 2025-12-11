@@ -36,7 +36,7 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "[data-testid='name-input-error']")
     private WebElement nameErrorMessage;
 
-    @FindBy(css = "data-testid='email-input-error']")
+    @FindBy(id = "my-error-id")
     private WebElement emailErrorMessage;
 
 

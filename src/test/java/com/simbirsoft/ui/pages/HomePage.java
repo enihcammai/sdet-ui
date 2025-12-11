@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BasePage {
 
@@ -29,10 +30,23 @@ public class HomePage extends BasePage {
     @FindBy(id = "menu-item-27580")
     private WebElement allCoursesLink;
 
+    @FindBy(id = "elementor-popup-modal-26600")
+    private WebElement popUpWidget;
+
+    @FindBy(className = "eicon-close")
+    private WebElement closeWidgetBtn;
+
 
     @Step("Видимость футера")
     public boolean isFooterVisible() {
         return isElementVisible(footerContainer);
+    }
+
+    @Step("Закрытие виджета")
+    public HomePage closeWidget(){
+        actions.moveByOffset(200, 100).build().perform();
+        wait.until(ExpectedConditions.visibilityOf(popUpWidget));
+        return (HomePage) click(closeWidgetBtn);
     }
 
     @Step("Скролл до футера")

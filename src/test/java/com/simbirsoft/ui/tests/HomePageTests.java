@@ -24,14 +24,15 @@ public class HomePageTests extends BaseTest {
     @Severity(SeverityLevel.MINOR)
     public void testScrollToTopButton() {
         HomePage homePage = new HomePage(driver);
-        homePage.scrollToFooter()
+        homePage.closeWidget()
+                .scrollToFooter()
                 .clickScrollToTopButton();
 
         assertTrue(homePage.isLogoVisible(), "Страница не вернулась в начало после нажатия кнопки");
     }
 
     @Test(priority = 3, description = "UI-03: Успешная проверка открытия формы регистрации")
-    @Story("Загрузка главной страницы")
+    @Story("Переход на форму регистрации")
     @Severity(SeverityLevel.CRITICAL)
     public void testRegistrationFormOpening() {
         HomePage homePage = new HomePage(driver);

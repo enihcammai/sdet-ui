@@ -13,7 +13,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(className = "uni-ml-4 troubleShootBtn")
+    @FindBy(linkText = "Sign Up")
     private WebElement signUpLink;
 
     @FindBy(className = "m-auto-xs")
