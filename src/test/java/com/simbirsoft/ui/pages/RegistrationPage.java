@@ -1,5 +1,6 @@
 package com.simbirsoft.ui.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,52 +36,64 @@ public class RegistrationPage extends BasePage {
     @FindBy(css = "[data-testid='name-input-error']")
     private WebElement nameErrorMessage;
 
-    @FindBy(css = "data-testid='email-input-error']")
+    @FindBy(id = "my-error-id")
     private WebElement emailErrorMessage;
 
 
+    @Step("Ввод имени: '{fullName}'")
     public RegistrationPage fillFullName(String fullName) {
         return (RegistrationPage) sendKeys(fullNameField, fullName);
     }
 
+
+    @Step("Открытие формы регистрации")
     public RegistrationPage openRegistrationForm(){
         driver.get(REG_PAGE_URL);
         return this;
     }
 
+    @Step("Ввод email: '{email}'")
     public RegistrationPage fillEmail(String email) {
        return (RegistrationPage) sendKeys(emailField, email);
     }
 
+    @Step("Заполнение формы: Имя='{fullName}', e-mail='{email}'")
     public RegistrationPage fillRegistrationForm(String fullName, String email) {
         return fillFullName(fullName)
                 .fillEmail(email);
     }
 
+    @Step("Установить флажок согласия с рассылкой")
     public RegistrationPage setAgreeCheckbox() {
         return (RegistrationPage) click(agreeCheckbox);
     }
 
+    @Step("Нажатие кнопки 'Send code'")
     public RegistrationPage clickSendCode() {
         return (RegistrationPage) click(sendCodeButton);
     }
 
+    @Step("Проверка отображение формы верификации")
     public boolean isVerificationFormVisible() {
         return isElementVisible(verificationForm);
     }
 
+    @Step("Проверка отображение формы регистрации")
     public boolean isRegistrationFormVisible() {
         return isElementVisible(registrationForm);
     }
 
+    @Step("Проверка отображение ошибки для поля 'Full Name'")
     public boolean isNameErrorMessageVisible() {
         return isElementVisible(nameErrorMessage);
     }
 
+    @Step("Проверка отображение ошибки для поля 'Email'")
     public boolean isEmailErrorMessageVisible() {
         return isElementVisible(emailErrorMessage);
     }
 
+    @Step("Получение текста всех сообщений об ошибках")
     public String getErrorMessageText() {
         List<String> errors = new ArrayList<>();
 
@@ -94,6 +107,7 @@ public class RegistrationPage extends BasePage {
         return errors.isEmpty() ? null : String.join("; ", errors);
     }
 
+    @Step("Заполнение и отправка формы регистрации с данными: Имя='{fullName}', e-mail='{email}'")
     public RegistrationPage testFormWithData(String fullName, String email) {
         return fillRegistrationForm(fullName, email)
                 .setAgreeCheckbox()
