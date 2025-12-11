@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-
 public class MockLoginTest extends BaseTest {
 
     private MockLoginPage buildMockLoginPage() {
@@ -40,9 +39,7 @@ public class MockLoginTest extends BaseTest {
                                 String expectedUsernameError,
                                 String expectedPasswordError,
                                 String expectedDescriptionError) {
-        MockLoginPage loginPage = buildMockLoginPage()
-                .testFormWithData(username, password, description);
-
+        MockLoginPage loginPage = buildMockLoginPage().testFormWithData(username, password, description);
         assertEquals(expectedUsernameError, loginPage.getUsernameErrorMessage());
         assertEquals(expectedPasswordError, loginPage.getPasswordErrorMessage());
         assertEquals(expectedDescriptionError, loginPage.getDescriptionErrorMessage());

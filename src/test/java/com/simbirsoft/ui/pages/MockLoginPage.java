@@ -25,18 +25,17 @@ public class MockLoginPage extends BasePage {
     @FindBy(css = "div[ng-messages= 'form.password.$error'] div.ng-scope")
     private WebElement passwordFieldError;
 
-    @FindBy(xpath = "/html/body/div[1]/div/div/div/form/ng-form/div[1]/div/div/input")
+    @FindBy(css = "ng-form[name='formly_1'] input")
     private WebElement descriptionField;
 
-    @FindBy(css = "ng-form[name='formly_1'] div.form-group.has-error")
+    @FindBy(css = "ng-form[name='formly_1'] div.has-error")
     private WebElement descriptionFieldError;
 
     @FindBy(css = "button.btn")
     private WebElement loginBtn;
 
-    @FindBy(xpath = "//div[contains(text(), 'Username or password is incorrect')]")
+    @FindBy(css = "div.alert-danger")
     private WebElement errorAlert;
-
 
     public boolean isTargetPage() {
         return wait.until(ExpectedConditions.urlToBe(MOCK_PAGE_TARGET_URL));
@@ -51,7 +50,6 @@ public class MockLoginPage extends BasePage {
     }
 
     public MockLoginPage fillDescription(String description) {
-        click(descriptionField);
         descriptionField.sendKeys("1");
         descriptionField.clear();
         return (MockLoginPage) sendKeys(descriptionField, description);
@@ -64,7 +62,6 @@ public class MockLoginPage extends BasePage {
     public MockLoginPage testFormWithData(String username, String password, String description) {
         return fillUsername(username).fillPassword(password).fillDescription(description);
     }
-
 
     public boolean isErrorAlertVisible() {
         return isElementVisible(errorAlert);
@@ -82,21 +79,21 @@ public class MockLoginPage extends BasePage {
         return isElementVisible(descriptionFieldError);
     }
 
-    public String getUsernameErrorMessage(){
+    public String getUsernameErrorMessage() {
         if (isUsernameErrorMessageVisible()) {
             return usernameFieldError.getText();
         }
         return "";
     }
 
-    public String getPasswordErrorMessage(){
+    public String getPasswordErrorMessage() {
         if (isPasswordErrorMessageVisible()) {
             return passwordFieldError.getText();
         }
         return "";
     }
 
-    public String getDescriptionErrorMessage(){
+    public String getDescriptionErrorMessage() {
         if (isDescriptionErrorBehaviorVisible()) {
             return "Entered value has an error";
         }
