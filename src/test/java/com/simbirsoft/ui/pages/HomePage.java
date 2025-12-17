@@ -36,6 +36,9 @@ public class HomePage extends BasePage {
     @FindBy(className = "eicon-close")
     private WebElement closeWidgetBtn;
 
+    @FindBy(id = "non-existing-element")
+    private WebElement nonExistingElement;
+
 
     @Step("Видимость футера")
     public boolean isFooterVisible() {
@@ -77,6 +80,11 @@ public class HomePage extends BasePage {
     public boolean isHomePageLoaded() {
         return driver.getTitle().contains("Way2Automation") &&
                 isElementVisible(memberLoginLink);
+    }
+
+    @Step
+    public boolean isNonExistingElementVisible(){
+        return isElementVisible(nonExistingElement);
     }
 
     @Step("Нажатие кнопки перехода к авторизации")
