@@ -8,13 +8,13 @@ import java.io.File;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-public class SqlExAuthorizationTest extends BaseTest{
+public class CreateCookieTest extends BaseTest{
 
     private SqlExAuthorization buildSqlExPage(){
         return new SqlExAuthorization(driver);
     }
 
-    @Test(groups = "saveCookies")
+    @Test
     public void testAuthorizationAndSaveCookies(){
         CookieHelper.deleteCookiesFile();
         assertFalse(CookieHelper.loadCookies(driver));
@@ -26,17 +26,5 @@ public class SqlExAuthorizationTest extends BaseTest{
 
         CookieHelper.saveCookies(driver);
         assertTrue(new File("cookies.ser").exists());
-    }
-
-    @Test(groups = "usageCookies", dependsOnGroups = "saveCookies")
-    public void testUseCookies(){
-        assertTrue(new File("cookies.ser").exists());
-
-        buildSqlExPage().openPage();
-        driver.manage().deleteAllCookies();
-        assertTrue(CookieHelper.loadCookies(driver));
-
-        driver.navigate().refresh();
-        assertTrue(buildSqlExPage().isUserLoggedIn());
     }
 }
