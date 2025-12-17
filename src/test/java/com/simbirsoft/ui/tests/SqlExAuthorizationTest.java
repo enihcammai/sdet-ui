@@ -3,7 +3,9 @@ package com.simbirsoft.ui.tests;
 import com.simbirsoft.ui.helpers.CookieHelper;
 import com.simbirsoft.ui.pages.SqlExAuthorization;
 import org.testng.annotations.Test;
+import java.io.File;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class SqlExAuthorizationTest extends BaseTest{
@@ -12,8 +14,10 @@ public class SqlExAuthorizationTest extends BaseTest{
         return new SqlExAuthorization(driver);
     }
 
-    @Test
-    public void testAuthorizationAndSaveCookies() throws Exception {
+    @Test(priority = 1)
+    public void testAuthorizationAndSaveCookies(){
+        CookieHelper.deleteCookiesFile();
+        assertFalse(CookieHelper.loadCookies(driver));
         assertTrue(buildSqlExPage().openPage()
                 .fillLogin("vladiusx2")
                 .fillPassword("rec!D4EBvClX7")
@@ -21,10 +25,13 @@ public class SqlExAuthorizationTest extends BaseTest{
                 .isUserLoggedIn());
 
         CookieHelper.saveCookies(driver);
+        assertTrue(new File("cookies.ser").exists());
     }
 
-    @Test
-    public void testUseCookies() throws Exception {
+    @Test(priority = 2)
+    public void testUseCookies(){
+        assertTrue(new File("cookies.ser").exists());
+
         buildSqlExPage().openPage();
         driver.manage().deleteAllCookies();
         assertTrue(CookieHelper.loadCookies(driver));
