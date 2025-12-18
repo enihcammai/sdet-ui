@@ -11,16 +11,16 @@ public class CookieHelper {
 
     private static final File COOKIES_FILE = new File("cookies.ser");
 
-    public static void saveCookies(WebDriver driver){
+    public static void saveCookies(WebDriver driver) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(COOKIES_FILE))) {
             oos.writeObject(new ArrayList<>(driver.manage().getCookies()));
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static boolean loadCookies(WebDriver driver){
+    public static boolean loadCookies(WebDriver driver) {
         if (!COOKIES_FILE.exists()) {
             return false;
         }
@@ -43,7 +43,7 @@ public class CookieHelper {
     }
 
     public static void deleteCookiesFile() {
-        if (COOKIES_FILE.exists()) {
+        if(COOKIES_FILE.exists()) {
             COOKIES_FILE.delete();
         }
     }
