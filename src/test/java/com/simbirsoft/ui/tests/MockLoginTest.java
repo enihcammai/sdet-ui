@@ -44,4 +44,15 @@ public class MockLoginTest extends BaseTest {
         assertEquals(expectedPasswordError, loginPage.getPasswordErrorMessage());
         assertEquals(expectedDescriptionError, loginPage.getDescriptionErrorMessage());
     }
+
+    @Test(description = "Проверка функциональности JSExecutor")
+    public void testJSExecutorFunctionality(){
+        assertTrue(buildMockLoginPage()
+                .clickUsernameField()
+                .isUsernameFieldFocused());
+
+        buildMockLoginPage().removeFocusFromInput();
+        assertTrue(buildMockLoginPage().verifyFocusRemovedFromUsernameField());
+        assertTrue(buildMockLoginPage().hasVerticalScroll());
+    }
 }
