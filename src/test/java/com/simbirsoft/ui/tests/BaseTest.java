@@ -25,7 +25,7 @@ public class BaseTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(PropertyService.getInstance().getProperty("base_url"));
+        driver.get(PropertyService.getInstance().getProperty("mock_login"));
 
         WebDriverManager.setDriver(driver);
     }

@@ -1,5 +1,8 @@
 package com.simbirsoft.ui.pages;
 
+import com.simbirsoft.ui.tests.MockLoginTest;
+import io.qameta.allure.Step;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,6 +62,10 @@ public class MockLoginPage extends BasePage {
         return (MockLoginPage) click(loginBtn);
     }
 
+    public MockLoginPage clickUsernameField(){
+        return (MockLoginPage) click(usernameField);
+    }
+
     public MockLoginPage testFormWithData(String username, String password, String description) {
         return fillUsername(username).fillPassword(password).fillDescription(description);
     }
@@ -99,4 +106,39 @@ public class MockLoginPage extends BasePage {
         }
         return "";
     }
+
+    @Step("Убрать фокус из активного элемента с помощью JavaScript")
+    public MockLoginPage removeFocusFromInput() {
+        return (MockLoginPage) jsExecutor.executeScript(
+                "if(document.activeElement) { " +
+                        "   document.activeElement.blur(); " +
+                        "}"
+        );
+    }
+
+    @Step("Проверить наличие вертикального скролла на странице")
+    public boolean hasVerticalScroll() {
+        return (Boolean) jsExecutor.executeScript(
+                "return document.documentElement.scrollHeight > document.documentElement.offsetHeight;"
+        );
+    }
+
+    @Step("Убедиться, что фокус убран с поля ввода имени пользователя")
+    public boolean verifyFocusRemovedFromUsernameField(){
+        return !isElementFocused(usernameField);
+    }
+
+    @Step("Проверить, что поле ввода имени пользователя находится в фокусе")
+    public boolean isUsernameFieldFocused(){
+        return isElementFocused(usernameField);
+    }
+
+    @Step("Проверить, что элемент находится в фокусе")
+    public boolean isElementFocused(WebElement element) {
+        return (Boolean) jsExecutor.executeScript(
+                "return arguments[0] === document.activeElement;",
+                element
+        );
+    }
+
 }

@@ -13,6 +13,7 @@ public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected Actions actions;
+    protected JavascriptExecutor jsExecutor;
 
 
     public BasePage(WebDriver driver) {
@@ -20,6 +21,7 @@ public class BasePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this);
         this.actions = new Actions(driver);
+        this.jsExecutor = (JavascriptExecutor) driver;
     }
 
     protected BasePage click(WebElement element) {
