@@ -1,5 +1,6 @@
 package com.simbirsoft.ui.tests;
 
+import com.simbirsoft.ui.utils.RetryAnalyzer;
 import com.simbirsoft.ui.utils.PropertyService;
 import com.simbirsoft.ui.utils.WebDriverManager;
 import io.qameta.allure.Step;
@@ -9,6 +10,8 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
