@@ -24,42 +24,37 @@ public class BaseTest {
     protected WebDriverWait wait;
 
     @BeforeMethod
-    @Parameters({"browser", "headless", "useGrid", "gridUrl"})
-    public void setUp(@Optional("edge") String browser,
-                      @Optional("false") boolean headless,
+    @Parameters({"headless", "useGrid", "gridUrl"})
+    @Step("Запуск")
+    public void setUp(@Optional("false") boolean headless,
                       @Optional("false") boolean useGrid,
                       @Optional("http://localhost:4444/wd/hub") String gridUrl) {
 
         if (useGrid) {
-            setupRemoteDriver(browser, gridUrl);
+            setupRemoteDriver(gridUrl);
         } else {
             setupLocalDriver();
         }
-
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(PropertyService.getInstance().getProperty("base_url"));
     }
 
-    private void setupRemoteDriver(String browser, String gridUrl) {
+    @Step("Запуск удаленного драйвера")
+    private void setupRemoteDriver(String gridUrl) {
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName("MicrosoftEdge");
             EdgeOptions edgeOptions = new EdgeOptions();
             edgeOptions.addArguments("--headless");
             edgeOptions.merge(capabilities);
-
             driver = new RemoteWebDriver(new URL(gridUrl), capabilities);
-            System.out.println("Running tests on Selenium Grid: " + gridUrl);
-            System.out.println("Browser: " + browser);
-
         } catch (MalformedURLException e) {
-            System.err.println("Invalid Grid URL: " + gridUrl);
             throw new RuntimeException(e);
         }
     }
 
-    @Step("Запуск")
+    @Step("Запуск локального драйвера")
     public void setupLocalDriver() {
         System.setProperty(PropertyService.getInstance().getProperty("driver_name"), PropertyService.getInstance().getProperty("driver_path"));
 
