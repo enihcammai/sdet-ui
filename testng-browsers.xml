@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Multi-Browser Suite" parallel="tests" thread-count="4">
+
+    <test name="Chrome Tests">
+        <parameter name="browser" value="chrome"/>
+        <parameter name="headless" value="false"/>
+        <parameter name="useGrid" value="false"/>
+
+        <classes>
+            <class name="com.simbirsoft.ui.tests.HomePageTests"/>
+            <class name="com.simbirsoft.ui.tests.NavigationTest"/>
+        </classes>
+    </test>
+
+    <test name="Firefox Tests">
+        <parameter name="browser" value="firefox"/>
+        <parameter name="headless" value="false"/>
+        <parameter name="useGrid" value="false"/>
+
+        <classes>
+            <class name="com.simbirsoft.ui.tests.HomePageTests"/>
+            <class name="com.simbirsoft.ui.tests.NavigationTest"/>
+        </classes>
+    </test>
+
+    <test name="Edge Tests">
+        <parameter name="browser" value="edge"/>
+        <parameter name="headless" value="false"/>
+        <parameter name="useGrid" value="false"/>
+
+        <classes>
+            <class name="com.simbirsoft.ui.tests.HomePageTests"/>
+            <class name="com.simbirsoft.ui.tests.NavigationTest"/>
+        </classes>
+    </test>
+
+    <test name="IE Tests">
+        <parameter name="browser" value="ie"/>
+        <parameter name="headless" value="false"/>
+        <parameter name="useGrid" value="false"/>
+
+        <classes>
+            <class name="com.simbirsoft.ui.tests.HomePageTests"/>
+            <class name="com.simbirsoft.ui.tests.NavigationTest"/>
+        </classes>
+    </test>
+
+</suite>
