@@ -5,7 +5,6 @@ import com.simbirsoft.ui.utils.PropertyService;
 import com.simbirsoft.ui.utils.WebDriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -16,7 +15,7 @@ import java.time.Duration;
 
 public class BaseTest {
     protected WebDriver driver;
-    protected WebDriverWait wait;
+    protected String mainWindowHandle;
 
     @BeforeMethod
     @Parameters({"browser", "headless", "useGrid", "gridUrl"})
@@ -28,10 +27,11 @@ public class BaseTest {
         driver = DriverFactory.createDriver(browser, headless, useGrid, gridUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        if(!useGrid){
+        if (!useGrid) {
             driver.manage().window().maximize();
         }
         driver.get(PropertyService.getInstance().getProperty("base_url"));
+        mainWindowHandle = driver.getWindowHandle();
     }
 
     @AfterMethod
