@@ -7,8 +7,11 @@
     </listeners>
 
     <test name="Test1">
+        <parameter name="browser" value="edge"/>
+        <parameter name="headless" value="true"/>
+        <parameter name="useGrid" value="true"/>
         <classes>
-            <class name="com.simbirsoft.ui.tests.HomePageTests"/>
+            <class name="com.simbirsoft.ui.tests.NavigationTest"/>
         </classes>
     </test>
 </suite>
